@@ -7,6 +7,7 @@ package paintapplication;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 /**
  *
@@ -281,6 +283,11 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
 
         btn_sin.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         btn_sin.setText("Sin(x)");
+        btn_sin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_sinActionPerformed(evt);
+            }
+        });
 
         btn_cos.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         btn_cos.setText("Cos(x)");
@@ -297,10 +304,10 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_sin)
-                    .addComponent(btn_linear))
-                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btn_linear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_sin, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_parabol, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_cos))
@@ -311,9 +318,9 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_sin, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(btn_sin, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                     .addComponent(btn_cos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btn_linear, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
                     .addComponent(btn_parabol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -334,7 +341,7 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
 
         txt_Size.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         txt_Size.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_Size.setText("1");
+        txt_Size.setText("0");
         txt_Size.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_SizeActionPerformed(evt);
@@ -452,7 +459,7 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
         Paint();
     }//GEN-LAST:event_btn_pencilActionPerformed
 
-    public void Paint(){
+    private void Paint(){
         panel_Editor.addMouseListener(this);
         panel_Editor.addMouseMotionListener(this);
     }
@@ -522,6 +529,11 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
         // TODO add your handling code here:
         color = Color.WHITE;
     }//GEN-LAST:event_btn_color_whiteActionPerformed
+
+    private void btn_sinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sinActionPerformed
+        // TODO add your handling code here:
+        btn_sin.addActionListener(this);
+    }//GEN-LAST:event_btn_sinActionPerformed
 
     /**
      * @param args the command line arguments
@@ -597,7 +609,10 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+        if(e.getSource() == btn_sin){
+            drawSin(panel_Editor);
+        }
+       
     }
 
     @Override
@@ -643,6 +658,42 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
 
     @Override
     public void mouseMoved(MouseEvent e) {
-       
+        
+    }
+    
+     private void drawSin(JPanel p){
+        int Xm = p.getWidth();
+        int Ym = p.getHeight();
+        int X0 = Xm/2, Y0 = Ym/2;
+        float Xs = (float) (Xm/(4*Math.PI));
+        float Ys = (float) (Ym/4);
+        
+        Graphics g = p.getGraphics();
+        g.setColor(Color.BLACK);
+        g.drawLine(0, Y0, Xm, Y0);
+        g.drawLine(X0, 0, X0, Ym);
+        
+        g.setColor(color);
+        float x1,y1;
+        int x11, y11, x12, y12;
+        int x10 = 0, y10 = 0;
+        for(int i = 0; i < 1000; i++){
+            x1 = (float) (-2*Math.PI + (4*Math.PI/1000)*i);
+            y1 = (float) Math.sin(x1);
+            x11 = (int) (x1*Xs);
+            y11 = (int) (y1*Ys);
+            x12 = X0+x11;
+            y12 = Y0-y11;
+            
+            if(i == 0){
+                x10 = x12;
+                y10 = y12;
+            }
+            else{
+                g.drawLine(x10, y10, x12, y12);
+                x10 = x12;
+                y10 = y12;
+            }
+        }
     }
 }

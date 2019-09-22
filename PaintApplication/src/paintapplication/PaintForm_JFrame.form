@@ -429,11 +429,11 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btn_sin" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="btn_linear" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btn_linear" max="32767" attributes="0"/>
+                          <Component id="btn_sin" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btn_parabol" min="-2" pref="95" max="-2" attributes="0"/>
                           <Component id="btn_cos" min="-2" max="-2" attributes="0"/>
@@ -447,10 +447,10 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btn_sin" pref="30" max="32767" attributes="0"/>
+                          <Component id="btn_sin" pref="25" max="32767" attributes="0"/>
                           <Component id="btn_cos" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btn_linear" pref="26" max="32767" attributes="0"/>
                           <Component id="btn_parabol" max="32767" attributes="0"/>
@@ -468,6 +468,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Sin(x)"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_sinActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btn_cos">
               <Properties>
@@ -558,7 +561,7 @@
                   <Font name="Times New Roman" size="12" style="1"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="1"/>
+                <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_SizeActionPerformed"/>
