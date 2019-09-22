@@ -5,20 +5,33 @@
  */
 package paintapplication;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import javax.swing.ImageIcon;
 
 /**
  *
  * @author Admin
  */
-public class PaintForm_JFrame extends javax.swing.JFrame {
+public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListener ,MouseListener, MouseMotionListener{
+    
+    private int x0, y0, x1, y1;
+    private Color color;
 
     /**
      * Creates new form PaintForm_JFrame
      */
     public PaintForm_JFrame() {
         initComponents();
+        this.setTitle("My Paint Application");
+        color = Color.BLACK;
     }
 
     /**
@@ -40,13 +53,13 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
         btn_text = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btn_color_black = new javax.swing.JButton();
-        btn_color_grown = new javax.swing.JButton();
+        btn_color_pink = new javax.swing.JButton();
         btn_color_red = new javax.swing.JButton();
         btn_color_orange = new javax.swing.JButton();
         btn_color_yellow = new javax.swing.JButton();
         btn_color_green = new javax.swing.JButton();
         btn_color_blue = new javax.swing.JButton();
-        btn_color_violet = new javax.swing.JButton();
+        btn_color_magenta = new javax.swing.JButton();
         btn_color_gray = new javax.swing.JButton();
         btn_color_white = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -57,6 +70,7 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         slider_Size = new javax.swing.JSlider();
         txt_Size = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         panel_Editor = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menu_file = new javax.swing.JMenu();
@@ -109,7 +123,7 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btn_pencil, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_eraser, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                    .addComponent(btn_eraser, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btn_fill, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -129,10 +143,10 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
                     .addComponent(btn_fill, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btn_text, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_color, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_eraser, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_magnifier, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_magnifier, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_eraser, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -149,7 +163,12 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
             }
         });
 
-        btn_color_grown.setBackground(new java.awt.Color(51, 0, 0));
+        btn_color_pink.setBackground(new java.awt.Color(255, 102, 204));
+        btn_color_pink.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_color_pinkActionPerformed(evt);
+            }
+        });
 
         btn_color_red.setBackground(new java.awt.Color(204, 0, 0));
         btn_color_red.addActionListener(new java.awt.event.ActionListener() {
@@ -166,16 +185,46 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
         });
 
         btn_color_yellow.setBackground(new java.awt.Color(255, 255, 0));
+        btn_color_yellow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_color_yellowActionPerformed(evt);
+            }
+        });
 
         btn_color_green.setBackground(new java.awt.Color(0, 255, 51));
+        btn_color_green.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_color_greenActionPerformed(evt);
+            }
+        });
 
         btn_color_blue.setBackground(new java.awt.Color(0, 0, 204));
+        btn_color_blue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_color_blueActionPerformed(evt);
+            }
+        });
 
-        btn_color_violet.setBackground(new java.awt.Color(102, 0, 102));
+        btn_color_magenta.setBackground(new java.awt.Color(255, 0, 0));
+        btn_color_magenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_color_magentaActionPerformed(evt);
+            }
+        });
 
         btn_color_gray.setBackground(new java.awt.Color(102, 102, 102));
+        btn_color_gray.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_color_grayActionPerformed(evt);
+            }
+        });
 
         btn_color_white.setBackground(new java.awt.Color(255, 255, 255));
+        btn_color_white.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_color_whiteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -191,13 +240,13 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_color_blue, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_color_violet)
+                        .addComponent(btn_color_magenta)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_color_white))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(btn_color_black)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_color_grown)
+                        .addComponent(btn_color_pink)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_color_red)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -211,11 +260,10 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_color_black, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_color_grown, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_color_red, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_color_orange, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_color_black, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_color_red, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_color_orange, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_color_pink, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_color_gray, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -223,7 +271,7 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btn_color_yellow, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_color_green, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btn_color_violet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_color_magenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_color_white, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -275,7 +323,26 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(204, 204, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Size", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_BOTTOM, new java.awt.Font("Times New Roman", 1, 13))); // NOI18N
 
+        slider_Size.setMajorTickSpacing(1);
+        slider_Size.setMaximum(10);
+        slider_Size.setValue(0);
+        slider_Size.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                slider_SizeStateChanged(evt);
+            }
+        });
+
         txt_Size.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        txt_Size.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_Size.setText("1");
+        txt_Size.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_SizeActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel1.setText("px");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -283,12 +350,14 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(slider_Size, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(slider_Size, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(64, 64, 64)
-                .addComponent(txt_Size, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addComponent(txt_Size, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -296,8 +365,10 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(slider_Size, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txt_Size)
-                .addContainerGap())
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_Size, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -309,9 +380,9 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(27, 27, 27)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
@@ -332,11 +403,11 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
         panel_Editor.setLayout(panel_EditorLayout);
         panel_EditorLayout.setHorizontalGroup(
             panel_EditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 925, Short.MAX_VALUE)
         );
         panel_EditorLayout.setVerticalGroup(
             panel_EditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 329, Short.MAX_VALUE)
+            .addGap(0, 324, Short.MAX_VALUE)
         );
 
         menu_file.setText("File");
@@ -355,18 +426,22 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panel_Editor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(panel_Editor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panel_Editor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(346, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(134, 134, 134)
+                    .addComponent(panel_Editor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
         pack();
@@ -374,10 +449,13 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
 
     private void btn_pencilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pencilActionPerformed
         // TODO add your handling code here:
-        
-
+        Paint();
     }//GEN-LAST:event_btn_pencilActionPerformed
 
+    public void Paint(){
+        panel_Editor.addMouseListener(this);
+        panel_Editor.addMouseMotionListener(this);
+    }
     private void btn_fillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fillActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_fillActionPerformed
@@ -388,15 +466,62 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
 
     private void btn_color_blackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_color_blackActionPerformed
         // TODO add your handling code here:
+        color = Color.BLACK;
     }//GEN-LAST:event_btn_color_blackActionPerformed
 
     private void btn_color_redActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_color_redActionPerformed
         // TODO add your handling code here:
+        color = Color.RED;
     }//GEN-LAST:event_btn_color_redActionPerformed
 
     private void btn_color_orangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_color_orangeActionPerformed
         // TODO add your handling code here:
+        color = Color.ORANGE;
     }//GEN-LAST:event_btn_color_orangeActionPerformed
+
+    private void slider_SizeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_slider_SizeStateChanged
+        // TODO add your handling code here:
+        txt_Size.setText(Integer.toString(slider_Size.getValue()));
+    }//GEN-LAST:event_slider_SizeStateChanged
+
+    private void txt_SizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_SizeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_SizeActionPerformed
+
+    private void btn_color_pinkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_color_pinkActionPerformed
+        // TODO add your handling code here:
+        color = Color.PINK;
+    }//GEN-LAST:event_btn_color_pinkActionPerformed
+
+    private void btn_color_grayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_color_grayActionPerformed
+        // TODO add your handling code here:
+        color = Color.GRAY;
+    }//GEN-LAST:event_btn_color_grayActionPerformed
+
+    private void btn_color_yellowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_color_yellowActionPerformed
+        // TODO add your handling code here:
+        color = Color.YELLOW;
+    }//GEN-LAST:event_btn_color_yellowActionPerformed
+
+    private void btn_color_greenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_color_greenActionPerformed
+        // TODO add your handling code here:
+        color = Color.GREEN;
+    }//GEN-LAST:event_btn_color_greenActionPerformed
+
+    private void btn_color_blueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_color_blueActionPerformed
+        // TODO add your handling code here:
+        color = Color.BLUE;
+    }//GEN-LAST:event_btn_color_blueActionPerformed
+
+    private void btn_color_magentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_color_magentaActionPerformed
+        // TODO add your handling code here:
+        color = Color.MAGENTA;
+    }//GEN-LAST:event_btn_color_magentaActionPerformed
+
+    private void btn_color_whiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_color_whiteActionPerformed
+        // TODO add your handling code here:
+        color = Color.WHITE;
+    }//GEN-LAST:event_btn_color_whiteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -427,6 +552,7 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new PaintForm_JFrame().setVisible(true);
             }
@@ -439,10 +565,10 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_color_blue;
     private javax.swing.JButton btn_color_gray;
     private javax.swing.JButton btn_color_green;
-    private javax.swing.JButton btn_color_grown;
+    private javax.swing.JButton btn_color_magenta;
     private javax.swing.JButton btn_color_orange;
+    private javax.swing.JButton btn_color_pink;
     private javax.swing.JButton btn_color_red;
-    private javax.swing.JButton btn_color_violet;
     private javax.swing.JButton btn_color_white;
     private javax.swing.JButton btn_color_yellow;
     private javax.swing.JButton btn_cos;
@@ -454,6 +580,7 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_pencil;
     private javax.swing.JButton btn_sin;
     private javax.swing.JButton btn_text;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -467,4 +594,55 @@ public class PaintForm_JFrame extends javax.swing.JFrame {
     private javax.swing.JSlider slider_Size;
     private javax.swing.JTextField txt_Size;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+       
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        x0 = e.getX();
+        y0 = e.getY();
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        x1 = e.getX();
+        y1 = e.getY();
+
+        Graphics2D g = (Graphics2D) panel_Editor.getGraphics();
+        g.setColor(color);
+        int size = Integer.parseInt(txt_Size.getText());
+        g.setStroke(new BasicStroke(size));
+        g.drawLine(x1, y1, x0, y0);
+
+        x0 = x1;
+        y0 = y1;
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+       
+    }
 }

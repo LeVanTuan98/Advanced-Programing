@@ -22,6 +22,7 @@ public class PaintApplication {
     public static void main(String[] args) {
         // TODO code application logic here
        JFrame PaintForm = new PaintForm_JFrame();
+//       PaintForm.setTitle("My Paint Application");
        PaintForm.setVisible(true);
         
     }
