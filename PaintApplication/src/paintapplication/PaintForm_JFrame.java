@@ -16,7 +16,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.QuadCurve2D;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.binding.Bindings;
 import javafx.scene.shape.QuadCurve;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -69,8 +75,6 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
         jPanel4 = new javax.swing.JPanel();
         btn_sin = new javax.swing.JButton();
         btn_cos = new javax.swing.JButton();
-        btn_linear_tangent = new javax.swing.JButton();
-        btn_parabol = new javax.swing.JButton();
         txt_Formula = new javax.swing.JTextField();
         btn_draw = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
@@ -153,7 +157,7 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
                     .addComponent(btn_color, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_magnifier, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_eraser, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 255));
@@ -295,20 +299,9 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
 
         btn_cos.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         btn_cos.setText("Cos(x)");
-
-        btn_linear_tangent.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        btn_linear_tangent.setText("Tangent");
-        btn_linear_tangent.addActionListener(new java.awt.event.ActionListener() {
+        btn_cos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_linear_tangentActionPerformed(evt);
-            }
-        });
-
-        btn_parabol.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        btn_parabol.setText("y = 5x^2 + 8");
-        btn_parabol.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_parabolActionPerformed(evt);
+                btn_cosActionPerformed(evt);
             }
         });
 
@@ -321,45 +314,42 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
 
         btn_draw.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         btn_draw.setText("Draw");
+        btn_draw.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_drawActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btn_linear_tangent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_sin, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addGap(22, 22, 22)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_parabol, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_cos)))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(txt_Formula, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_draw)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_draw))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(btn_sin, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(btn_cos)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_draw)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(txt_Formula)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_sin, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                    .addComponent(btn_cos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(11, 11, 11)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_linear_tangent, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                    .addComponent(btn_parabol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_Formula, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_draw))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_sin, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_cos, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24))
         );
 
         jPanel5.setBackground(new java.awt.Color(204, 204, 255));
@@ -424,7 +414,7 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
@@ -445,11 +435,11 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
         panel_Editor.setLayout(panel_EditorLayout);
         panel_EditorLayout.setHorizontalGroup(
             panel_EditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 956, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         panel_EditorLayout.setVerticalGroup(
             panel_EditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 308, Short.MAX_VALUE)
+            .addGap(0, 306, Short.MAX_VALUE)
         );
 
         menu_file.setText("File");
@@ -468,22 +458,18 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panel_Editor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panel_Editor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(329, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(150, Short.MAX_VALUE)
-                    .addComponent(panel_Editor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panel_Editor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -570,19 +556,19 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
         btn_sin.addActionListener(this);
     }//GEN-LAST:event_btn_sinActionPerformed
 
-    private void btn_parabolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_parabolActionPerformed
-        // TODO add your handling code here:
-        btn_parabol.addActionListener(this);
-    }//GEN-LAST:event_btn_parabolActionPerformed
-
-    private void btn_linear_tangentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_linear_tangentActionPerformed
-        // TODO add your handling code here:
-        btn_linear_tangent.addActionListener(this);
-    }//GEN-LAST:event_btn_linear_tangentActionPerformed
-
     private void txt_FormulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_FormulaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_FormulaActionPerformed
+
+    private void btn_drawActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_drawActionPerformed
+        // TODO add your handling code here:
+        btn_draw.addActionListener(this);
+    }//GEN-LAST:event_btn_drawActionPerformed
+
+    private void btn_cosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cosActionPerformed
+        // TODO add your handling code here:
+        btn_cos.addActionListener(this);
+    }//GEN-LAST:event_btn_cosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -636,9 +622,7 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
     private javax.swing.JButton btn_draw;
     private javax.swing.JButton btn_eraser;
     private javax.swing.JButton btn_fill;
-    private javax.swing.JButton btn_linear_tangent;
     private javax.swing.JButton btn_magnifier;
-    private javax.swing.JButton btn_parabol;
     private javax.swing.JButton btn_pencil;
     private javax.swing.JButton btn_sin;
     private javax.swing.JButton btn_text;
@@ -663,11 +647,15 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
         if(e.getSource() == btn_sin){
             drawSin(panel_Editor);
         }
-        if(e.getSource() == btn_parabol){
-            drawParabol(panel_Editor);
+        if(e.getSource() == btn_cos){
+            drawCos(panel_Editor);
         }
-        if(e.getSource() == btn_linear_tangent){
-            drawTangent(panel_Editor);
+        if (e.getSource() == btn_draw){
+            try {
+                Graph(panel_Editor);
+            } catch (ScriptException ex) {
+                Logger.getLogger(PaintForm_JFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
        
     }
@@ -730,8 +718,6 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
         g.drawLine(0, Y0, Xm, Y0);
         g.drawLine(X0, 0, X0, Ym);
         
-        
-        
         g.setColor(color);
         int size = Integer.parseInt(txt_Size.getText());
         g.setStroke(new BasicStroke(size));
@@ -758,12 +744,12 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
         }
     }
     
-    private void drawParabol(JPanel p){
+     private void drawCos(JPanel p){
         int Xm = p.getWidth();
         int Ym = p.getHeight();
-        int X0 = Xm/2, Y0 = Ym*9/10;
-        float Xs = (float) (Xm/30);
-        float Ys = (float) (Ym/100);
+        int X0 = Xm/2, Y0 = Ym/2;
+        float Xs = (float) (Xm/(4*Math.PI));
+        float Ys = (float) (Ym/4);
         
         Graphics2D g = (Graphics2D)p.getGraphics();
         g.setColor(Color.BLACK);
@@ -773,17 +759,16 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
         g.setColor(color);
         int size = Integer.parseInt(txt_Size.getText());
         g.setStroke(new BasicStroke(size));
-        
         float x1,y1;
         int x11, y11, x12, y12;
         int x10 = 0, y10 = 0;
         for(int i = 0; i < 1000; i++){
-            x1 = (float) (-4.0 + (8.0/1000)*i);
-            y1 = (float) (5*x1*x1 + 8);
+            x1 = (float) (-2*Math.PI + (4*Math.PI/1000)*i);
+            y1 = (float) Math.cos(x1);
             x11 = (int) (x1*Xs);
             y11 = (int) (y1*Ys);
-            x12 = X0 + x11;
-            y12 = Y0 - y11;
+            x12 = X0+x11;
+            y12 = Y0-y11;
             
             if(i == 0){
                 x10 = x12;
@@ -794,23 +779,94 @@ public class PaintForm_JFrame extends javax.swing.JFrame implements ActionListen
                 x10 = x12;
                 y10 = y12;
             }
-        }  
+        }
     }
-    
-    private void drawTangent(JPanel p){
+   
+    private void Graph(JPanel p) throws ScriptException{
         int Xm = p.getWidth();
         int Ym = p.getHeight();
-        int X0 = Xm/2, Y0 = Ym*9/10;
-        float Xs = (float) (Xm/30);
-        float Ys = (float) (Ym/100);
+        int X0 = Xm/2, Y0 = Ym/2;
+        int unitX = Xm / 10;
+        int unitY = Ym / 10;
         
-        Graphics2D g = (Graphics2D) p.getGraphics();
-        g.setColor(color);
+        float Xs = (float) (Xm/10);
+        float Ys = (float) (Ym/10);
+        Graphics2D g2d = (Graphics2D)p.getGraphics();
+        g2d.setBackground(Color.WHITE);
+        g2d.clearRect(0, 0, Xm, Ym);
+        g2d.setColor(color);
         int size = Integer.parseInt(txt_Size.getText());
-        g.setStroke(new BasicStroke(size));
-        int x1 = (int)(0*Xs + X0), x2 = (int)(5*Xs + X0);
-        int y1 = (int)(Y0 - (-86*Ys)), y2 = (int)(Y0 - 64*Ys);
+        g2d.setStroke(new BasicStroke(size));
+        g2d.drawLine(0, Y0, Xm, Y0);
+        g2d.drawLine(X0, 0, X0, Ym);
         
-        g.drawLine(x1,y1,x2,y2);
+        // Vertical lines : From the center to the right
+        for (int i = X0 + unitX; i < Xm; i += unitX){
+            g2d.drawLine(i, 0, i, Ym);
+        }
+        // Vertical lines: From the center to the left
+        for (int i = X0 - unitX; i > 0; i -= unitX){
+            g2d.drawLine(i, 0, i, Ym);
+        }
+        // Honrizontal lines: From the center to the bottom
+        for (int i = Y0 + unitY; i < Ym; i += unitY){
+            g2d.drawLine(0, i, Xm, i);
+        }
+        // Honrizontal lines: From the center to the top
+        for (int i = Y0 - unitY; i > 0; i -= unitY){
+            g2d.drawLine(0, i, Xm, i);
+        }
+        // Write unit number on the axes
+        for (int i = X0, i2 = 0; i < Xm; i += unitX, i2++){
+            g2d.drawString(i2 + "", i + 5, Y0 -5);//from center to the right
+        }
+        for (int i = X0 - unitX, i2 = -1; i > 0; i -= unitX, i2--){
+            g2d.drawString(i2 + "", i + 5, Y0 - 5);//from center to the left
+        }
+        for (int i = Y0 + unitY, i2 = -1; i < Ym; i += unitY, i2--){
+            g2d.drawString(i2 + "", X0 + 5, i - 5);// from center to the bottom
+        }
+        for (int i = Y0 - unitY, i2 = 1; i > 0; i -= unitY, i2++){
+            g2d.drawString(i2 + "", X0 + 5, i - 5);
+        }
+        
+        float x1,y1;
+        int x11, y11, x12, y12;
+        int x10 = 0, y10 = 0;
+        for (int i = 0; i < 1000; i++){
+            x1 = (float) (-5.0 + (10.0*i/1000));
+            y1 = (float) Calculate(x1);
+            x11 = (int) (x1*Xs);
+            y11 = (int) (y1*Ys);
+            x12 = X0 + x11;
+            y12 = Y0 - y11;
+            
+            if(i == 0){
+                x10 = x12;
+                y10 = y12;
+            }
+            else{
+                g2d.drawLine(x10, y10, x12, y12);
+                x10 = x12;
+                y10 = y12;
+            }
+        }
+
+        
+    }
+    
+    private float Calculate(float x) throws ScriptException{
+        String expression = txt_Formula.getText().toString();
+        float temp = 0;
+        if (expression.length() > 0){
+            expression = expression.replace("x", Float.toString(x));
+            System.out.println(expression);
+            ScriptEngineManager manager = new ScriptEngineManager();
+            ScriptEngine engine = manager.getEngineByName("javascript");
+            Object result = engine.eval(expression);
+            temp = Float.parseFloat(result.toString());
+            System.out.println(temp);
+        }
+        return temp;
     }
 }
