@@ -43,6 +43,10 @@ public class Product {
         this.nameProduct = nameProduct;
         this.price = price;
     }
+
+    public Product() {
+    }
+    
     
     
 }

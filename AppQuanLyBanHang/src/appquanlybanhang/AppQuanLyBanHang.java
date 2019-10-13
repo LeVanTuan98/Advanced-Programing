@@ -17,11 +17,11 @@ public class AppQuanLyBanHang {
     public static void main(String[] args) {
         // TODO code application logic here
         QuanLyBanHang_Frame QL = new QuanLyBanHang_Frame();
-        Product iphone = new Product("1", "IPhone11", 30000000);
-        QL.setProduct(iphone);
-        Product samSung = new Product("2", "Samsung Note 10+", 30000000);
-        QL.setProduct(samSung);
-        QL.show();
+//        Product iphone = new Product("1", "IPhone11", 30000000);
+//        QL.setProduct(iphone);
+//        Product samSung = new Product("2", "Samsung Note 10+", 30000000);
+//        QL.setProduct(samSung);
+        QL.setVisible(true);
     }
     
 }
