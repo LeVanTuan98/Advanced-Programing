@@ -10,6 +10,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
@@ -254,11 +255,11 @@ public class QuanLyBanHang_Frame extends javax.swing.JFrame  {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(258, 258, 258)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(205, 205, 205)))
+                        .addGap(158, 158, 158)))
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42))
         );
@@ -395,6 +396,11 @@ public class QuanLyBanHang_Frame extends javax.swing.JFrame  {
 
         btnPay.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btnPay.setText("Thanh toán");
+        btnPay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPayActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -603,6 +609,22 @@ public class QuanLyBanHang_Frame extends javax.swing.JFrame  {
         updateTable();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
+    private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Thanh toán thành công", "Thanh toán", JOptionPane.INFORMATION_MESSAGE );
+        reset();
+    }//GEN-LAST:event_btnPayActionPerformed
+
+    private void reset(){
+        mDetailBillList.clear();
+        updateTable();
+        txtName.setText("");
+        txtAddress.setText("");
+        txtQuantity.setText("");
+        txtTotal.setText("");
+        cbPayment.setSelectedIndex(0);
+        cbProduct.setSelectedIndex(0);
+    }
     private void updateTable(){
          
         DefaultTableModel model = (DefaultTableModel) tbBillDetail.getModel();
